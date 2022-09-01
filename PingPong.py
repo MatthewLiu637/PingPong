@@ -67,8 +67,26 @@ while game:
         racket1.LEFT_UPDATE()
         racket2.RIGHT_UPDATE()
 
+        ball.rect.x += x
+        ball.rect.y += y
+
+        if ball.rect.y > win_height - 50 or ball.rect.y < 0:
+            y *=-1
+
+        if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):
+            x *= -1
+
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(lose1, (200, 200))
+
+        if ball.rect.x > win_width:
+            finish = True
+            window.blit(lose2, (200, 200))
+            
         racket1.reset()
         racket2.reset()
+        ball.reset()
     
     display.update()
     clock.tick(FPS)
